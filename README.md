@@ -20,7 +20,7 @@
   FOR LINUX\
   cp .env.example .env\
   php artisan key:generate\
-  php artisan serve \
+  php artisan serve
 
   VISIT: http://localhost:8000
 ## About Movies
