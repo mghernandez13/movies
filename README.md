@@ -13,14 +13,14 @@
 
 ## Installation procedure using CLI:
 
-  git clone https://github.com/mghernandez13/movies.git
-  composer install
-  FOR WINDOWS:
-  COPY env.example .env
-  FOR LINUX
-  cp .env.example .env 
-  php artisan key:generate
-  php artisan serve
+  git clone https://github.com/mghernandez13/movies.git.
+  composer install.
+  FOR WINDOWS:.
+  COPY env.example .env.
+  FOR LINUX.
+  cp .env.example .env.
+  php artisan key:generate.
+  php artisan serve.
 
 ## About Movies
 
