@@ -20,8 +20,9 @@
   FOR LINUX\
   cp .env.example .env\
   php artisan key:generate\
-  php artisan serve\
+  php artisan serve \
 
+  VISIT: http://localhost:8000
 ## About Movies
 
 Movies is a Laravel Application that fetches movie data from a Mongodb atlas cloud service. Upon loading the homepage, it shows a table list of movies that can be sorted by title and vote average. There's details button for every item that when clicked shows a modal with the movie details. Here as some features of Laravel:
