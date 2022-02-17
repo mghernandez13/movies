@@ -13,7 +13,7 @@
 
 ## Installation procedure using CLI:
 
-  git clone https://github.com/mghernandez13/movies.git\
+  git clone https://github.com/mghernandez13/movies.git \
   composer install\
   FOR WINDOWS:\
   COPY env.example .env\
