@@ -10,16 +10,13 @@ class IndexController extends Controller
 {
     public function index(Request $request) 
     {
-        $response = Http::withHeaders([
-            'Content-Type' => 'application/json',
-            'Access-Control-Request-Headers' => '*',
-            'api-key' => env('API_KEY','')
-        ])
-        ->post(env('API_DOMAIN').'/app/data-itzom/endpoint/data/beta/action/find',[
+        $method  = 'find';
+        $options = [
             "dataSource" => env('MONGO_DB_SOURCE',''),
             'database'   => env('MONGO_DB_NAME',''),
             'collection' => env('MONGO_COLLECTION','')
-        ]);
+        ];
+        $response = $this->fetchResponse($method,$options);
 
         return view('home',compact('response'));
     }
@@ -41,18 +38,14 @@ class IndexController extends Controller
             }
             return json_encode(['status' => $status,'message' => $message]);
         } else {
-
-            $response = Http::withHeaders([
-                'Content-Type' => 'application/json',
-                'Access-Control-Request-Headers' => '*',
-                'api-key' => env('API_KEY','')
-            ])
-            ->post(env('API_DOMAIN').'/app/data-itzom/endpoint/data/beta/action/findOne',[
+            $method  = 'findOne';
+            $options = [
                 "dataSource" => env('MONGO_DB_SOURCE',''),
                 'database'   => env('MONGO_DB_NAME',''),
                 'collection' => env('MONGO_COLLECTION',''),
                 "filter"     => ["Title" => $title]
-            ]);
+            ];
+            $response = $this->fetchResponse($method,$options);
 
             if($response->ok()) {
                 $status  = 'success';
@@ -65,5 +58,17 @@ class IndexController extends Controller
 
             return json_encode(['status' => $status,'message' => $message,'data' => $data]);
         }
+    }
+
+    private function fetchResponse($method, $options) 
+    {
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Access-Control-Request-Headers' => '*',
+            'api-key' => env('API_KEY','')
+        ])
+        ->post(env('API_DOMAIN').'/app/data-itzom/endpoint/data/beta/action/'.$method,$options);
+
+        return $response;
     }
 }
