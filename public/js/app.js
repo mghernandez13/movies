@@ -14,9 +14,6 @@
               modal.close();
             });
 
-            $('#moviesTbl').DataTable({
-              "pageLength": 5
-            })
             $('.getDetails').click(function() {
               var title     = $(this).data('title');
               var _token = $('input[name=_token]').val();
@@ -79,4 +76,9 @@
                   }
               });
             });
+
+            $('#moviesTbl').DataTable({
+              "pageLength": 5
+            })
+            
           })
