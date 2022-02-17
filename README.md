@@ -13,18 +13,19 @@
 
 ## Installation procedure using CLI:
 
-  git clone https://github.com/mghernandez13/movies.git
-  composer install
-  FOR WINDOWS:
-  COPY env.example .env
-  FOR LINUX
-  cp .env.example .env 
-  php artisan key:generate
+  git clone https://github.com/mghernandez13/movies.git \
+  composer install\
+  FOR WINDOWS:\
+  COPY env.example .env\
+  FOR LINUX\
+  cp .env.example .env\
+  php artisan key:generate\
   php artisan serve
 
+  VISIT: http://localhost:8000
 ## About Movies
 
-Movies is a Laravel Application that fetches movie data from a Mongodb atlas cloud service. Upon loading the homepage, it shows a table list of movies that can be sorted by title and vote average. There's details button for every item that when clicked shows a modal with the movie details. Here as some features of Laravel:
+Movies is a Laravel Application that fetches movie data from a Mongodb atlas cloud service. Upon loading the homepage, it shows a table list of movies that can be sorted by title and vote average. There's details button for every item that when clicked shows a modal with the movie details. Here are some features of Laravel:
 - [Simple, fast routing engine](https://laravel.com/docs/routing).
 - [Powerful dependency injection container](https://laravel.com/docs/container).
 - Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
