@@ -10,26 +10,48 @@ class IndexController extends Controller
 {
     public function index(Request $request) 
     {
-        $method  = 'find';
+        $method   = 'find';
+        $sort     = isset($request->sort) && $request->sort == "popular" ? -1 : 1;
+        $txt_sort = $request->sort;
+        $page     = isset($request->page) ? $request->page : 1;
+        $limit    = isset($request->limit) ? (int)$request->limit : 5;
+        $skip     = $limit * ($page - 1);
+        $start    = $skip + 1;
+
         $options = [
             "dataSource" => env('MONGO_DB_SOURCE',''),
             'database'   => env('MONGO_DB_NAME',''),
-            'collection' => env('MONGO_COLLECTION','')
+            'collection' => env('MONGO_COLLECTION',''),
         ];
-        $response = $this->fetchResponse($method,$options);
 
-        return view('home',compact('response'));
+        $full_response = $this->fetchResponse($method,$options);
+        $total         = isset($full_response['documents']) ? count($full_response['documents']) : 0;
+
+        $options = [
+            "dataSource" => env('MONGO_DB_SOURCE',''),
+            'database'   => env('MONGO_DB_NAME',''),
+            'collection' => env('MONGO_COLLECTION',''),
+            'sort'       => ['Voter Average' => $sort],
+            'limit'      => $limit,
+            'skip'       => $skip
+        ];
+
+        $response     = $this->fetchResponse($method,$options);
+        $end          = count($response['documents']) == $limit ? $limit * $page : (($limit * $page) - $limit) + count($response['documents']);
+        $total_pages  = (int)ceil($total / $limit);
+
+        return view('home',compact('response','total','page','start','end','total_pages','sort','txt_sort','limit'));
     }
 
     public function getMoviesById(Request $request)
     {
 
-        $title     = $request->title;
+        $id        = $request->id;
         $message   = '';
         $status    = 'error';
         $data      = '';
         $validator = Validator::make($request->all(), [
-            'title'   => 'required',
+            'id'   => 'required',
         ]);
 
         if ($validator->fails()) {            
@@ -43,7 +65,9 @@ class IndexController extends Controller
                 "dataSource" => env('MONGO_DB_SOURCE',''),
                 'database'   => env('MONGO_DB_NAME',''),
                 'collection' => env('MONGO_COLLECTION',''),
-                "filter"     => ["Title" => $title]
+                "filter"     => ["_id" => 
+                    [ "\$oid" => $id]
+                ]
             ];
             $response = $this->fetchResponse($method,$options);
 
